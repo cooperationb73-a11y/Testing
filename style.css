@@ -1,0 +1,504 @@
+/* Base Styles & Typography */
+:root {
+  --primary: #0ea5e9;
+  --primary-hover: #0284c7;
+  --secondary: #6366f1;
+  --bg-gradient-1: #0f172a;
+  --bg-gradient-2: #1e3a8a;
+  --bg-gradient-3: #09293c;
+  --bg-gradient-4: #06b6d4;
+  --text-main: #f8fafc;
+  --text-muted: #cbd5e1;
+  --card-bg: rgba(255, 255, 255, 0.05);
+  --card-border: rgba(255, 255, 255, 0.1);
+  --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  color: var(--text-main);
+  background: linear-gradient(-45deg, var(--bg-gradient-1), var(--bg-gradient-2), var(--bg-gradient-3), var(--bg-gradient-4));
+  background-size: 400% 400%;
+  animation: gradientFlow 15s ease infinite;
+  min-height: 100vh;
+  overflow-x: hidden;
+  position: relative;
+  line-height: 1.6;
+}
+
+/* Ambient glow */
+body::before,
+body::after {
+  content: "";
+  position: absolute;
+  width: 60vw;
+  height: 60vw;
+  max-width: 600px;
+  max-height: 600px;
+  border-radius: 50%;
+  filter: blur(120px);
+  opacity: 0.3;
+  z-index: -1;
+}
+
+body::before {
+  background: var(--primary);
+  top: -10%;
+  left: -10%;
+}
+
+body::after {
+  background: var(--secondary);
+  bottom: -10%;
+  right: -10%;
+}
+
+@keyframes gradientFlow {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Typography elements */
+h1, h2, h3 { line-height: 1.2; font-weight: 700; }
+a { text-decoration: none; color: inherit; }
+
+/* -------------------------------------
+   Header & Navigation
+-------------------------------------- */
+header {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90%;
+  max-width: 1200px;
+  padding: 16px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  background: rgba(15, 23, 42, 0.6);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--card-border);
+  border-radius: 100px;
+  box-shadow: var(--glass-shadow);
+  z-index: 1000;
+}
+
+.logo {
+  font-size: 1.5rem;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+}
+.logo span {
+  color: var(--primary);
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.nav-links a:not(.speed-btn) {
+  font-weight: 500;
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  transition: color 0.2s ease;
+}
+.nav-links a:not(.speed-btn):hover {
+  color: var(--text-main);
+}
+
+.speed-btn {
+  padding: 10px 20px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, var(--secondary), var(--primary));
+  color: white;
+  font-size: 0.9rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+.speed-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(14, 165, 233, 0.4);
+}
+
+/* -------------------------------------
+   Main Content Layout
+-------------------------------------- */
+main {
+  padding-top: 120px; /* space for fixed header */
+  padding-bottom: 60px;
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 90%;
+  display: flex;
+  flex-direction: column;
+  gap: 80px;
+}
+
+/* Hero Section */
+.hero {
+  text-align: center;
+  max-width: 800px;
+  margin: 40px auto 0;
+}
+.hero h1 {
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  margin-bottom: 24px;
+  background: linear-gradient(to right, #fff, #94a3b8);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.hero p {
+  font-size: clamp(1rem, 2vw, 1.25rem);
+  color: var(--text-muted);
+}
+
+/* Speed Test Section */
+.speed-test-section {
+  display: flex;
+  justify-content: center;
+}
+
+.glass-panel {
+  background: var(--card-bg);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid var(--card-border);
+  border-radius: 32px;
+  box-shadow: var(--glass-shadow);
+  padding: 40px;
+}
+
+.speed-test-panel {
+  width: 100%;
+  max-width: 600px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.speed-test-panel h2 {
+  font-size: 1.8rem;
+  margin-bottom: 8px;
+}
+.test-desc {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  margin-bottom: 40px;
+}
+
+/* Gauge UI */
+.gauge-container {
+  position: relative;
+  width: 250px;
+  height: 150px;
+  margin-bottom: 30px;
+  overflow: hidden;
+}
+
+.gauge-svg {
+  width: 100%;
+  height: 200%; /* double height due to half circle viewBox */
+  transform: translateY(0);
+}
+
+.gauge-bg {
+  fill: none;
+  stroke: rgba(255,255,255,0.1);
+  stroke-width: 6;
+  stroke-linecap: round;
+}
+
+.gauge-fill {
+  fill: none;
+  stroke: var(--primary);
+  stroke-width: 6;
+  stroke-linecap: round;
+  stroke-dasharray: 0, 125.6; /* Path length calculation logic in JS */
+  transition: stroke-dasharray 0.1s linear;
+  filter: drop-shadow(0 0 8px var(--primary));
+}
+
+.gauge-center {
+  position: absolute;
+  bottom: 0px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#speed-value {
+  font-size: 3.5rem;
+  font-weight: 800;
+  line-height: 1;
+  color: white;
+}
+
+.unit {
+  font-size: 1rem;
+  color: var(--text-muted);
+  font-weight: 500;
+  margin-top: 4px;
+}
+
+.status-text {
+  font-size: 0.85rem;
+  color: var(--primary);
+  margin-top: 8px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* Metrics Grid */
+.metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  width: 100%;
+  margin-top: 10px;
+  margin-bottom: 30px;
+}
+
+.metric-box {
+  background: rgba(0,0,0,0.2);
+  border-radius: 16px;
+  padding: 16px 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  border: 1px solid rgba(255,255,255,0.05);
+}
+
+.metric-label {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.metric-value {
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+.primary-btn {
+  padding: 16px 48px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  border: none;
+  border-radius: 999px;
+  background: white;
+  color: var(--bg-gradient-1);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 20px rgba(255, 255, 255, 0.2);
+}
+
+.primary-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(255, 255, 255, 0.4);
+}
+.primary-btn:active:not(:disabled) {
+  transform: translateY(1px);
+}
+.primary-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+/* -------------------------------------
+   Deals Section
+-------------------------------------- */
+.deals-section {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.section-header {
+  text-align: center;
+}
+.section-header h2 {
+  font-size: clamp(2rem, 3vw, 2.5rem);
+  margin-bottom: 12px;
+}
+.section-header p {
+  color: var(--text-muted);
+  font-size: 1.1rem;
+}
+
+.deals-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 24px;
+}
+
+.deal-card {
+  position: relative;
+  background: var(--card-bg);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--card-border);
+  border-radius: 24px;
+  padding: 32px 24px;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.3s ease, background 0.3s ease;
+}
+
+.deal-card:hover {
+  transform: translateY(-5px);
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255,255,255,0.2);
+}
+
+.deal-card.highlight {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--primary);
+  box-shadow: 0 0 20px rgba(14, 165, 233, 0.2);
+}
+
+.recommended-badge {
+  position: absolute;
+  top: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--primary);
+  color: white;
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 4px 12px;
+  border-radius: 999px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.deal-tag {
+  display: inline-block;
+  align-self: flex-start;
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 0.8rem;
+  font-weight: 800;
+  letter-spacing: 1px;
+  margin-bottom: 20px;
+}
+
+.bg-red { background: rgba(239, 68, 68, 0.2); color: #fca5a5; border: 1px solid rgba(239, 68, 68, 0.3); }
+.bg-yellow { background: rgba(234, 179, 8, 0.2); color: #fde047; border: 1px solid rgba(234, 179, 8, 0.3); }
+.bg-green { background: rgba(34, 197, 94, 0.2); color: #86efac; border: 1px solid rgba(34, 197, 94, 0.3); }
+.bg-blue { background: rgba(59, 130, 246, 0.2); color: #93c5fd; border: 1px solid rgba(59, 130, 246, 0.3); }
+
+.price {
+  font-size: 2.5rem;
+  margin-bottom: 24px;
+  color: white;
+}
+.price span {
+  font-size: 1rem;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.features {
+  list-style: none;
+  margin-bottom: 32px;
+  flex-grow: 1;
+}
+
+.features li {
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: #e2e8f0;
+  font-size: 0.95rem;
+}
+.features .icon {
+  font-size: 1.2rem;
+}
+
+.claim-btn {
+  width: 100%;
+  padding: 14px;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.2);
+  background: transparent;
+  color: white;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.claim-btn:hover {
+  background: white;
+  color: var(--bg-gradient-1);
+}
+
+.highlight .claim-btn {
+  background: var(--primary);
+  border-color: var(--primary);
+}
+.highlight .claim-btn:hover {
+  background: var(--primary-hover);
+  color: white;
+}
+
+/* Footer */
+footer {
+  text-align: center;
+  padding: 40px 0;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  border-top: 1px solid var(--card-border);
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 90%;
+}
+
+/* -------------------------------------
+   Media Queries for Responsiveness
+-------------------------------------- */
+@media (max-width: 768px) {
+  header {
+    padding: 12px 20px;
+    border-radius: 20px;
+  }
+  .nav-links {
+    gap: 16px;
+  }
+  .nav-links a:not(.speed-btn) {
+    display: none; /* Hide standard links on very small screens, keep speed test button */
+  }
+  
+  .glass-panel {
+    padding: 30px 20px;
+  }
+  
+  .metrics-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+  .metric-box {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+}
